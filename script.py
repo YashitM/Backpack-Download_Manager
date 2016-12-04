@@ -1,6 +1,13 @@
 import requests as re
 import webbrowser
 import wget
+import urllib.request
+import os
+import glob
+import zipfile as zf
+from time import sleep
+
+
 
 
 def get_course_link(no,semester_name):
@@ -49,7 +56,19 @@ def get_all_links(no,semester_name):
 	exam_link=full_link[:27]+exam_base_link
 	project_link=full_link[:27]+project_base_link
 	#compiled_urls=[lecture_link,homework_link,tutorial_link,lab_link,solution_link,other_link,exam_link,project_link]
+	base_file_name=no[:3]
 	print ("Downloading has started. This might take a while...")
+	#urllib.request.urlretrieve(lab_link,base_file_name+"Labs.zip")
+	#urllib.request.urlretrieve(lecture_link,base_file_name+"Lectures.zip")
+	urllib.request.urlretrieve(homework_link,base_file_name+"Homeworks.zip")
+	urllib.request.urlretrieve(other_link,base_file_name+"Others.zip")
+	urllib.request.urlretrieve(exam_link,base_file_name+"Exams.zip")
+	#urllib.request.urlretrieve(solution_link,base_file_name+"Solutions.zip")
+	urllib.request.urlretrieve(project_link,base_file_name+"Projects.zip")
+	#urllib.request.urlretrieve(tutorial_link,base_file_name+"Tutorials.zip")
+
+	"""
+	THE OTHER METHOD
 	print ()
 	print ("Downloading Lectures...")
 	file_name = wget.download(lecture_link)
@@ -81,8 +100,21 @@ def get_all_links(no,semester_name):
 	print()
 	print ("Downloading Others...")
 	file_name = wget.download(other_link)
-	print ()
+	print ()"""
 	print ("All downloads have been completed!")
+	print ()
+	print ("Files are being extracted..")
+	all_zip_files=glob.glob('*.zip')
+	for i in all_zip_files:
+	    directory=os.path.splitext(i)[0]
+	    os.mkdir(directory)
+	    data=zf.ZipFile(i,"r")
+	    data.extractall(directory)
+		os.remove(i)
+	print ("All files have been extracted!")
+
+
+
 
 def main():
 	no=input("Enter the course number: ").lower().replace(" ","")
