@@ -1,5 +1,7 @@
 import requests as re
 import webbrowser
+import wget
+
 
 def get_course_link(no,semester_name):
 	if("monsoon" in semester_name):
@@ -38,18 +40,49 @@ def get_all_links(no,semester_name):
 	exam_base_link="/resources/Exam/"+course_id+"/generate"
 	project_base_link="/resources/Project/"+course_id+"/generate"
 	#FINAL LINKS
-	lecture_link=full_link[:28]+lecture_base_link
-	homework_link=full_link[:28]+homework_base_link
-	tutorial_link=full_link[:28]+tutorial_base_link
-	lab_link=full_link[:28]+lab_base_link
-	solution_link=full_link[:28]+solution_base_link
-	other_link=full_link[:28]+other_base_link
-	exam_link=full_link[:28]+exam_base_link
-	project_link=full_link[:28]+project_base_link
-	#CHECKING WHETHER LINKS EXIST
-	request = re.get('http://www.google.com')
-	if request.status_code == 200:
-    	print('Web site exists')
+	lecture_link=full_link[:27]+lecture_base_link
+	homework_link=full_link[:27]+homework_base_link
+	tutorial_link=full_link[:27]+tutorial_base_link
+	lab_link=full_link[:27]+lab_base_link
+	solution_link=full_link[:27]+solution_base_link
+	other_link=full_link[:27]+other_base_link
+	exam_link=full_link[:27]+exam_base_link
+	project_link=full_link[:27]+project_base_link
+	#compiled_urls=[lecture_link,homework_link,tutorial_link,lab_link,solution_link,other_link,exam_link,project_link]
+	print ("Downloading has started. This might take a while...")
+	print ()
+	print ("Downloading Lectures...")
+	file_name = wget.download(lecture_link)
+	print ("Lectures have been downloaded")
+	print()
+	print ("Downloading Homeworks...")
+	file_name = wget.download(homework_link)
+	print ("Homeworks have been downloaded")
+	print()
+	print ("Downloading Tutorials...")
+	file_name = wget.download(tutorial_link)
+	print ("Tutorials have been downloaded")
+	print()
+	print ("Downloading Labs...")
+	file_name = wget.download(lab_link)
+	print ("Labs have been downloaded")
+	print()
+	print ("Downloading Solutions...")
+	file_name = wget.download(solution_link)
+	print ("Solutions have been downloaded")
+	print()
+	print ("Downloading Exams...")
+	file_name = wget.download(exam_link)
+	print ("Exams have been downloaded")
+	print()
+	print ("Downloading Projects...")
+	file_name = wget.download(project_link)
+	print ("Projects have been downloaded")
+	print()
+	print ("Downloading Others...")
+	file_name = wget.download(other_link)
+	print ()
+	print ("All downloads have been completed!")
 
 def main():
 	no=input("Enter the course number: ").lower().replace(" ","")
@@ -59,4 +92,3 @@ def main():
 main()
 
 
-	
