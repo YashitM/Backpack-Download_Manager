@@ -7,9 +7,6 @@ import glob
 import zipfile as zf
 from time import sleep
 
-
-
-
 def get_course_link(no,semester_name):
 	if("monsoon" in semester_name):
 		semester_name=semester_name.replace("monsoon","m")
@@ -55,18 +52,15 @@ def get_all_links(no,semester_name):
 	other_link=full_link[:27]+other_base_link
 	exam_link=full_link[:27]+exam_base_link
 	project_link=full_link[:27]+project_base_link
-	#compiled_urls=[lecture_link,homework_link,tutorial_link,lab_link,solution_link,other_link,exam_link,project_link]
-	base_file_name=no[:3]
 	print ("Downloading has started. This might take a while...")
-	#urllib.request.urlretrieve(lab_link,base_file_name+"Labs.zip")
-	#urllib.request.urlretrieve(lecture_link,base_file_name+"Lectures.zip")
-	urllib.request.urlretrieve(homework_link,base_file_name+"Homeworks.zip")
-	urllib.request.urlretrieve(other_link,base_file_name+"Others.zip")
-	urllib.request.urlretrieve(exam_link,base_file_name+"Exams.zip")
-	#urllib.request.urlretrieve(solution_link,base_file_name+"Solutions.zip")
-	urllib.request.urlretrieve(project_link,base_file_name+"Projects.zip")
-	#urllib.request.urlretrieve(tutorial_link,base_file_name+"Tutorials.zip")
-
+	urllib.request.urlretrieve(lab_link,no+"_Labs.zip")
+	urllib.request.urlretrieve(lecture_link,no+"_Lectures.zip")
+	urllib.request.urlretrieve(homework_link,no+"_Homeworks.zip")
+	urllib.request.urlretrieve(other_link,no+"_Others.zip")
+	urllib.request.urlretrieve(exam_link,no+"_Exams.zip")
+	urllib.request.urlretrieve(solution_link,no+"_Solutions.zip")
+	urllib.request.urlretrieve(project_link,no+"_Projects.zip")
+	urllib.request.urlretrieve(tutorial_link,no+"_Tutorials.zip")
 	"""
 	THE OTHER METHOD
 	print ()
@@ -106,15 +100,13 @@ def get_all_links(no,semester_name):
 	print ("Files are being extracted..")
 	all_zip_files=glob.glob('*.zip')
 	for i in all_zip_files:
-	    directory=os.path.splitext(i)[0]
-	    os.mkdir(directory)
-	    data=zf.ZipFile(i,"r")
-	    data.extractall(directory)
+		directory=os.path.splitext(i)[0]
+		os.mkdir(directory)
+		data=zf.ZipFile(i,"r")
+		data.extractall(directory)
+		data.close()
 		os.remove(i)
 	print ("All files have been extracted!")
-
-
-
 
 def main():
 	no=input("Enter the course number: ").lower().replace(" ","")
