@@ -21,14 +21,11 @@ def get_course_link(no,semester_name):
 	return link
 
 def get_course_id(no,semester_name):
-	url=get_course_link(no,semester_name)
-	var=re.get(url)	
-	website_content=var.content
-	website_content=str(website_content)
+	var=re.get(get_course_link(no,semester_name))	
+	website_content=str(var.content)
 	start_position_of_coure_id=website_content.find("background-image: url(/courses/photo/")+37
 	end_position_of_coure_id=website_content.find("/",start_position_of_coure_id)
-	course_id=website_content[start_position_of_coure_id:end_position_of_coure_id]
-	return course_id
+	return website_content[start_position_of_coure_id:end_position_of_coure_id]
 
 def get_all_links(no,semester_name):
 	course_id=get_course_id(no,semester_name)
@@ -60,46 +57,12 @@ def get_all_links(no,semester_name):
 	urllib.request.urlretrieve(solution_link,no+"_Solutions.zip")
 	urllib.request.urlretrieve(project_link,no+"_Projects.zip")
 	urllib.request.urlretrieve(tutorial_link,no+"_Tutorials.zip")
-	"""
-	print ()
-	print ("Downloading Lectures...")
-	file_name = wget.download(lecture_link)
-	print ("Lectures have been downloaded")
-	print()
-	print ("Downloading Homeworks...")
-	file_name = wget.download(homework_link)
-	print ("Homeworks have been downloaded")
-	print()
-	print ("Downloading Tutorials...")
-	file_name = wget.download(tutorial_link)
-	print ("Tutorials have been downloaded")
-	print()
-	print ("Downloading Labs...")
-	file_name = wget.download(lab_link)
-	print ("Labs have been downloaded")
-	print()
-	print ("Downloading Solutions...")
-	file_name = wget.download(solution_link)
-	print ("Solutions have been downloaded")
-	print()
-	print ("Downloading Exams...")
-	file_name = wget.download(exam_link)
-	print ("Exams have been downloaded")
-	print()
-	print ("Downloading Projects...")
-	file_name = wget.download(project_link)
-	print ("Projects have been downloaded")
-	print()
-	print ("Downloading Others...")
-	file_name = wget.download(other_link)
-	print ()"""
 	print ("All downloads have been completed!")
 	print ()
 	print ("Files are being extracted..")
 	all_zip_files=glob.glob('*.zip')
 	for i in all_zip_files:
-		directory=os.path.splitext(i)[0]
-		os.mkdir(directory)
+		os.mkdir(os.path.splitext(i)[0])
 		data=zf.ZipFile(i,"r")
 		data.extractall(directory)
 		data.close()
@@ -107,10 +70,6 @@ def get_all_links(no,semester_name):
 	print ("All files have been extracted!")
 
 def main():
-	no=input("Enter the course number: ").lower().replace(" ","")
-	semester_name=input("Enter your semester: ").lower().replace(" ","")
-	get_all_links(no,semester_name)
+	get_all_links(input("Enter the course number: ").lower().replace(" ",""),input("Enter your semester: ").lower().replace(" ",""))
 
 main()
-
-
